@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://l1rlxnrn14d7"]
+
+[ext_resource type="Texture2D" uid="uid://5f6my4kwxjh7" path="res://map.jpg" id="1_qm5j8"]
+[ext_resource type="PackedScene" uid="uid://da6kmvy7t5axe" path="res://player.tscn" id="2_jm18f"]
+[ext_resource type="Script" path="res://player.gd" id="3_mu0u2"]
+[ext_resource type="PackedScene" uid="uid://b1tlhrgqr57s0" path="res://collision_type_one.tscn" id="4_ac5gb"]
+[ext_resource type="Script" path="res://button.gd" id="5_2isp2"]
+
+[node name="Node" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_qm5j8")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_jm18f")]
+position = Vector2(1190, 1022)
+script = ExtResource("3_mu0u2")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="StaticBody2D" parent="." instance=ExtResource("4_ac5gb")]
+position = Vector2(2021, 1900)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 1904.0
+offset_top = 1812.0
+offset_right = 2116.0
+offset_bottom = 1937.0
+text = "Button"
+script = ExtResource("5_2isp2")
