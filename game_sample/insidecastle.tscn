@@ -1,0 +1,157 @@
+[gd_scene load_steps=16 format=3 uid="uid://b8ok1m3wh7160"]
+
+[ext_resource type="Texture2D" uid="uid://ska2m77n50xm" path="res://inside.png" id="1_vpivo"]
+[ext_resource type="PackedScene" uid="uid://3kidvivnys7h" path="res://player.tscn" id="2_0q1u8"]
+[ext_resource type="Script" path="res://dialogue.gd" id="3_4ep2m"]
+[ext_resource type="Script" path="res://dialogue_trigger.gd" id="3_mh8vi"]
+[ext_resource type="Script" path="res://label.gd" id="3_s5faj"]
+[ext_resource type="AudioStream" uid="uid://b0k8k1u6sj5kb" path="res://test.mp3" id="4_pxlrv"]
+[ext_resource type="Script" path="res://outsideCastle.gd" id="7_3c42b"]
+[ext_resource type="Script" path="res://quiz.gd" id="8_ir48a"]
+[ext_resource type="AudioStream" uid="uid://bcbqw21j26gbe" path="res://quiz.mp3" id="9_4y2la"]
+[ext_resource type="Script" path="res://window.gd" id="10_oq826"]
+[ext_resource type="Script" path="res://correct.gd" id="10_tgoul"]
+[ext_resource type="Script" path="res://incorrect.gd" id="11_mwsft"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d7le1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yw4j8"]
+size = Vector2(12.5, 10.9)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rm0uy"]
+
+[node name="Node" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_vpivo")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_0q1u8")]
+position = Vector2(882, 687)
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" groups=["DialogueBox"]]
+script = ExtResource("3_4ep2m")
+
+[node name="Label" type="Label" parent="CharacterBody2D/Camera2D"]
+offset_left = -560.0
+offset_top = 253.0
+offset_right = 561.0
+offset_bottom = 313.0
+script = ExtResource("3_s5faj")
+
+[node name="DialogueTrigger" type="Area2D" parent="."]
+scale = Vector2(5, 5)
+script = ExtResource("3_mh8vi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueTrigger"]
+position = Vector2(97.6, 122.8)
+shape = SubResource("CircleShape2D_d7le1")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="DialogueTrigger"]
+stream = ExtResource("4_pxlrv")
+
+[node name="DialogueTrigger2" type="Area2D" parent="."]
+scale = Vector2(5, 5)
+script = ExtResource("3_mh8vi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueTrigger2"]
+position = Vector2(89.8, 66.2)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_yw4j8")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="DialogueTrigger2"]
+stream = ExtResource("4_pxlrv")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 943.0
+offset_top = 685.0
+offset_right = 1093.0
+offset_bottom = 716.0
+toggle_mode = true
+text = "Outside the Castle"
+script = ExtResource("7_3c42b")
+
+[node name="Quiz" type="Area2D" parent="."]
+scale = Vector2(5, 5)
+script = ExtResource("8_ir48a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Quiz"]
+position = Vector2(263, 61.6)
+scale = Vector2(1, 1)
+shape = SubResource("CircleShape2D_rm0uy")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Quiz"]
+stream = ExtResource("9_4y2la")
+
+[node name="Window" type="Window" parent="." groups=["Window"]]
+title = "QUIZ TIME!"
+position = Vector2i(800, 74)
+size = Vector2i(500, 500)
+visible = false
+script = ExtResource("10_oq826")
+
+[node name="Camera2D" type="Camera2D" parent="Window" groups=["answer"]]
+script = ExtResource("3_4ep2m")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Window/Camera2D"]
+custom_minimum_size = Vector2(500, 50)
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 600.0
+offset_bottom = 100.0
+text = "What does 2 + 2 equal to?"
+
+[node name="Button" type="Button" parent="Window/Camera2D"]
+custom_minimum_size = Vector2(100, 100)
+offset_top = 200.0
+offset_right = 100.0
+offset_bottom = 300.0
+text = "4"
+script = ExtResource("10_tgoul")
+
+[node name="Button2" type="Button" parent="Window/Camera2D"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 200.0
+offset_top = 200.0
+offset_right = 300.0
+offset_bottom = 300.0
+text = "8"
+script = ExtResource("11_mwsft")
+
+[node name="Button3" type="Button" parent="Window/Camera2D"]
+custom_minimum_size = Vector2(100, 100)
+offset_top = 400.0
+offset_right = 100.0
+offset_bottom = 500.0
+text = "0"
+script = ExtResource("11_mwsft")
+
+[node name="Button4" type="Button" parent="Window/Camera2D"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 300.0
+offset_bottom = 500.0
+text = "2"
+script = ExtResource("11_mwsft")
+
+[node name="Label" type="Label" parent="Window/Camera2D"]
+offset_left = 100.0
+offset_top = 80.0
+offset_right = 162.0
+offset_bottom = 103.0
+
+[connection signal="body_entered" from="DialogueTrigger" to="DialogueTrigger" method="_on_body_entered"]
+[connection signal="finished" from="DialogueTrigger/AudioStreamPlayer" to="DialogueTrigger" method="_on_audio_stream_player_finished"]
+[connection signal="body_entered" from="DialogueTrigger2" to="DialogueTrigger2" method="_on_body_entered"]
+[connection signal="finished" from="DialogueTrigger2/AudioStreamPlayer" to="DialogueTrigger2" method="_on_audio_stream_player_finished"]
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="body_entered" from="Quiz" to="Quiz" method="_on_body_entered"]
+[connection signal="finished" from="Quiz/AudioStreamPlayer" to="Quiz" method="_on_audio_stream_player_finished"]
+[connection signal="close_requested" from="Window" to="Window/Camera2D/Button" method="_on_window_close_requested"]
+[connection signal="pressed" from="Window/Camera2D/Button" to="Window/Camera2D/Button" method="_on_pressed"]
+[connection signal="toggled" from="Window/Camera2D/Button" to="Window/Camera2D/Button" method="_on_toggled"]
+[connection signal="pressed" from="Window/Camera2D/Button2" to="Window/Camera2D/Button2" method="_on_pressed"]
+[connection signal="pressed" from="Window/Camera2D/Button3" to="Window/Camera2D/Button3" method="_on_pressed"]
+[connection signal="pressed" from="Window/Camera2D/Button4" to="Window/Camera2D/Button4" method="_on_pressed"]
